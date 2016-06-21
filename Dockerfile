@@ -1,8 +1,8 @@
-# Errbot - the pluggable chatbot
+# ErrBot Docker container based on rroemhild/docker-errbot
 
-FROM debian:jessie
+FROM python:3.5.1
 
-MAINTAINER Rafael Römhild <rafael@roemhild.de>
+MAINTAINER Philip Schmid <philip.schmid@ins.hsr.ch>
 
 ENV ERR_USER err
 ENV DEBIAN_FRONTEND noninteractive
@@ -21,25 +21,20 @@ RUN groupadd -r $ERR_USER \
        $ERR_USER
 
 # Install packages and perform cleanup
-RUN apt-get update \
+RUN apt-get update && apt-get -y upgrade \
   && apt-get -y install --no-install-recommends \
          git \
+         apt-utils \
          qalc \
          locales \
          dnsutils \
-         python3-dnspython \
-         python3-openssl \
-         python3-pip \
-         python3-cffi \
-         python3-pyasn1 \
-         python3-geoip \
-         python3-lxml \
     && locale-gen C.UTF-8 \
     && /usr/sbin/update-locale LANG=C.UTF-8 \
     && echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
     && locale-gen \
     && pip3 install virtualenv \
-	&& rm -rf /var/lib/apt/lists/*
+    && pip3 install git+https://github.com/saltstack/pepper \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /srv/data /srv/plugins /srv/errbackends /app \
     && chown -R $ERR_USER: /srv /app
