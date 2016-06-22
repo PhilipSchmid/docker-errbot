@@ -1,4 +1,4 @@
-errbot==4.2.1
+"errbot[slack]"
 sleekxmpp
 pyasn1-modules
 slackclient
