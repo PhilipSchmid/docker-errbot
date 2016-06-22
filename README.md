@@ -1,49 +1,36 @@
-# rroemhild/errbot
+# pschmid/docker-errbot-saltslack
 
 - [Introduction](#introduction)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
-    - [Image Runtime Config](#image-runtime-config)
     - [Bot Runtime Config](#bot-runtime-config)
 - [Persistence](#persistence)
 - [Use your own config file](#use-your-own-config-file)
 - [Run Err with extra arguments](#run-err-with-extra-arguments)
     - [Alternative config file](#alternative-config-file)
-    - [Err Help](#err-help)
     - [Run with text debug backend](#run-with-text-debug-backend)
 - [Exposed Ports](#exposed-ports)
+- [Credit](#credit)
 
 # Introduction
 
 Dockerfile to build an [Errbot](http://errbot.io) (the pluggable chatbot) container image.
-
-Current Version: `4.1.3`
+Currently based on python:3.5.1 container.
 
 # Quick Start
 
+Sample configuration for Slack:
 ```
-docker run -d \
-    --name err \
-    -e BOT_USERNAME=err@xmmp.local \
-    -e BOT_PASSWORD=errbotpwd \
-    -e BOT_ADMINS=admin@xmpp.local \
-    -e CHATROOM_PRESENCE=err@conference.xmpp.local \
-    -e "TZ=Europe/Berlin" \
-    rroemhild/err
-```
-
-or try the docker compose example
-
-```bash
-wget https://raw.githubusercontent.com/rroemhild/docker-err/master/docker-compose.yml
-docker-compose up
+sudo docker run -d \
+    --name errbot \
+    -e BACKEND=Slack \
+    -e BOT_USERNAME=@YOUR_SLACK_BOT_NAME \
+    -e BOT_TOKEN=YOUR_SLACK_BOT_TOKEN \
+    -e BOT_ADMINS=@SLACK_USER_ADMIN1,@SLACK_USER_ADMIN2 \
+    pschmid/docker-errbot-saltslack
 ```
 
 # Configuration
-
-## Image Runtime Config
-
-- **WAIT**: Seconds to sleep before starting the bot. Defaults to `None`
 
 ## Bot Runtime Config
 
@@ -99,21 +86,18 @@ If you pass arguments to Errbot you have to set the `-c /srv/config.py` argument
 ## Alternative config file
 
 ```bash
-docker run -it -v /tmp/errbot:/srv rroemhild/errbot -c /srv/production.py
-```
-
-## Err Help
-
-```bash
-$ docker run rroemhild/errbot -h
+docker run -it -v /tmp/errbot:/srv pschmid/docker-errbot-saltslack -c /srv/production.py
 ```
 
 ## Run with text debug backend
 
 ```bash
-docker run -it -v /tmp/errbot:/srv rroemhild/errbot -c /srv/config.py -T
+docker run -it -v /tmp/errbot:/srv pschmid/docker-errbot-saltslack -c /srv/config.py -T
 ```
 
 # Exposed Ports
 
 * 3142 (Webserver if configured)
+
+# Credit
+Thanks to rroemhild for his docker container which was used as basement for this one.
