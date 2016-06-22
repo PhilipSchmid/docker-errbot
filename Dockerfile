@@ -1,6 +1,6 @@
 # ErrBot Docker container based on rroemhild/docker-errbot
 
-FROM python:3.5.1
+FROM python:latest
 
 MAINTAINER Philip Schmid <philip.schmid@ins.hsr.ch>
 
