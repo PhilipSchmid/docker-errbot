@@ -28,6 +28,7 @@ RUN apt-get update && apt-get -y upgrade \
          qalc \
          locales \
          dnsutils \
+         curl \
     && locale-gen C.UTF-8 \
     && /usr/sbin/update-locale LANG=C.UTF-8 \
     && echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
